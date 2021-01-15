@@ -9,9 +9,13 @@ import org.xml.sax.helpers.*;
 import org.xml.sax.*;
 public class GestorContenido extends DefaultHandler {
 
-	int partida; 
-	int numeroCarta;
-	Jugador[] listaJugadores = new Jugador();
+	int numeroPartida;
+	float numeroCarta;
+	Jugador jugadorLeido = null;
+	Jugador jugadorGanador = new Jugador();
+	boolean comienzoNumeroCarta;
+	boolean comienzoNombreJugador;
+	int i;
 	
     public GestorContenido() {
         super();
@@ -31,36 +35,73 @@ public class GestorContenido extends DefaultHandler {
     	
     		case "partida":
     			
+    			numeroPartida = Integer.parseInt(att.getValue(i++));
     			
     			break;
-    		
-    		
-    		
     	
-    		case "jugador":
-    		
-    		
+    		case "nombre":
+    	
+    			comienzoNombreJugador = true;
+    			
     			break;
-    	
-    		case "carta":
-    		
+    			
+    		case "numero":
+    			
+    			comienzoNumeroCarta = true;
+    			
     			break;
-    	
-    	
     	}
     	
     }
     	
     @Override
     public void endElement(String uri, String nombre, String nombreC){
-        System.out.println("\t[/ "+nombreC +"]");
+        
+    	System.out.println("El ganador es"+ jugadorGanador.getNombre());
     }
     @Override
     public void characters (char[] ch, int inicio, int longitud)
             throws SAXException{
-        String cad = new String(ch, inicio, longitud);
+    	
+    	String cad = new String(ch, inicio, longitud);
+    	
+    	//Analizando el jugador leido
+    	
+    	if(comienzoNombreJugador) {
+    		
+    		jugadorLeido.setNombre(cad);
+    		
+    		if(comienzoNumeroCarta) {
+    			
+    			if(jugadorGanador.compareTo(jugadorLeido) == 1) {
+    				
+    				jugadorGanador = jugadorLeido;
+    				
+    			}
+    		}
+    	}
+    	
+    	
+    	
+    	if(comienzoNumeroCarta) {
+    		
+    		jugadorLeido.incrementarPuntuacion(Integer.parseInt(cad));
+    		
+    		if(!jugadorLeido.hePerdido()) {
+    			
+    			if(jugadorGanador.compareTo(jugadorLeido) == 1) {
+    				
+    				jugadorGanador = jugadorLeido;
+    				
+    			} 
+    			
+    		}
+    			
+    	}
+    /*    
         cad = cad.replaceAll("[\t\n]",""); // Quitamos tabuladores y saltos de linea
-        System.out.println("\t\t" + cad);
+       System.out.println("\t\t" + cad); */
+    		
     }
 }
 // FIN GestionContenido
