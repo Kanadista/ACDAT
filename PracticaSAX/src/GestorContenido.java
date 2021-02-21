@@ -57,7 +57,17 @@ public class GestorContenido extends DefaultHandler {
     @Override
     public void endElement(String uri, String nombre, String nombreC){
         
-    	System.out.println("El ganador es"+ jugadorGanador.getNombre());
+    	switch(nombreC) {
+    	
+    	case "partida":
+    	
+    		System.out.println("El ganador es"+ jugadorGanador.getNombre());
+    	
+    	break;
+    	
+    	}
+    	
+    	
     }
     @Override
     public void characters (char[] ch, int inicio, int longitud)

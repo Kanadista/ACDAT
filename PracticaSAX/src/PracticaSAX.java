@@ -1,9 +1,5 @@
 
 
-/**
- *
- * @author Leo
- */
 
 import java.io.*;
 import java.util.logging.Level;
@@ -28,7 +24,7 @@ public class PracticaSAX {
         procesadorXML.setContentHandler(gestor);
         archivoXML = new InputSource(nombreArchivo);
     }
-    void andale(){
+    void leerArchivo(){
         try {
             procesadorXML.parse(archivoXML);
         } catch (IOException ex) {

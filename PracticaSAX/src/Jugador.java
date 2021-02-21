@@ -36,7 +36,6 @@ public class Jugador implements Comparable<Jugador> {
 		
 	}
 	
-	
 	@Override
 	public int compareTo(Jugador o) {
 		// TODO Auto-generated method stub
